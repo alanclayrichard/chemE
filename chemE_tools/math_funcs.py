@@ -2,8 +2,6 @@ import tqdm as tqdm
 import numpy as np
 import numpy.typing as npt
 
-print(np.arange(0,3,1))
-
 class Regression:
     def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
             if isinstance(x_test,bool) == False:
