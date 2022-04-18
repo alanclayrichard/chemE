@@ -13,6 +13,6 @@ import chemE_tools.math as tools
 
 predicted_model = tools.Regression(x_train,y_train,1,x_test)
 ```
-*This package is highly dependent on [numpy](https://numpy.org) and [pandas](https://pandas.pydata.org) and also uses [tqdm](https://github.com/tqdm/tqdm) in some for loops*
+*This package is highly dependent on [numpy](https://numpy.org) and [pandas](https://pandas.pydata.org) and also uses [tqdm](https://github.com/tqdm/tqdm) in some for loops. Donations are welcome (found in .github/funding)*
 
 (set up from [this](https://towardsdatascience.com/create-your-custom-python-package-that-you-can-pip-install-from-your-git-repository-f90465867893) guide)
