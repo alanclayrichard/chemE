@@ -12,9 +12,6 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/alanclayrichard/math',
-#     project_urls = {
-#         "Bug Tracker": "https://github.com/mike-huls/toolbox/issues"
-#     },
     license='MIT',
     packages=['math_tools'],
     install_requires=['requests'],
