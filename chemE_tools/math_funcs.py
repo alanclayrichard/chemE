@@ -1,10 +1,12 @@
+import tqdm as tqdm
 import numpy as np
 import numpy.typing as npt
-import tqdm as tqdm
+
+print(np.arange(0,3,1))
 
 class Regression:
     def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
-            if isinstance(x_test,bool) == True:
+            if isinstance(x_test,bool) == False:
                 x_test = x_train
             Regression.checknan(x_train)
             Regression.checknan(x_train)
@@ -29,9 +31,9 @@ class Regression:
             return mult_linreg_mdl, Betas
 
     def get_r2(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
-        if isinstance(x_test,bool) == True:
+        if isinstance(x_test,bool) == False:
                 x_test = x_train
-        if isinstance(y_test,bool) == True:
+        if isinstance(y_test,bool) == False:
                 y_test = y_train
         yhat = np.mean(y_test)
         pred,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
@@ -40,9 +42,9 @@ class Regression:
         return 1 - RSS/TSS
 
     def get_adj_r2(x_train: npt.NDArray, y_train: npt.NDArray, n: int, d: int, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
-        if isinstance(x_test,bool) == True:
+        if isinstance(x_test,bool) == False:
                 x_test = x_train
-        if isinstance(y_test,bool) == True:
+        if isinstance(y_test,bool) == False:
                 y_test = y_train
         yhat,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
         ybar = np.mean(y_test)
