@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from rk4 import rk4
-from rk45 import rk45
 
 def algae(t,x):
     # define variables
@@ -26,8 +25,6 @@ def algae(t,x):
     dxdt = np.array([dCdt])
     return dxdt
 
-# t1,y1 = rk4(algae,0,48,[1],.001)
-t2,y2 = rk45(algae,0,48,[1, 2],.001)
-# plt.plot(t1,y1)
-plt.plot(t2,y2)
+t1,y1 = rk4(algae,0,48,[1],.001)
+plt.plot(t1,y1)
 plt.show()
