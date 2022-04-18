@@ -4,7 +4,7 @@ import numpy.typing as npt
 
 class Regression:
     def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
-            if isinstance(x_test,bool) == False:
+            if isinstance(x_test,bool) == True:
                 x_test = x_train
             Regression.checknan(x_train)
             Regression.checknan(x_train)
@@ -29,9 +29,9 @@ class Regression:
             return mult_linreg_mdl, Betas
 
     def get_r2(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
-        if isinstance(x_test,bool) == False:
+        if isinstance(x_test,bool) == True:
                 x_test = x_train
-        if isinstance(y_test,bool) == False:
+        if isinstance(y_test,bool) == True:
                 y_test = y_train
         yhat = np.mean(y_test)
         pred,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
@@ -40,9 +40,9 @@ class Regression:
         return 1 - RSS/TSS
 
     def get_adj_r2(x_train: npt.NDArray, y_train: npt.NDArray, n: int, d: int, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
-        if isinstance(x_test,bool) == False:
+        if isinstance(x_test,bool) == True:
                 x_test = x_train
-        if isinstance(y_test,bool) == False:
+        if isinstance(y_test,bool) == True:
                 y_test = y_train
         yhat,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
         ybar = np.mean(y_test)
