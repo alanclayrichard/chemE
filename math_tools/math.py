@@ -4,7 +4,7 @@ import tqdm as tqdm
 
 class Regression:
     def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
-            if isinstance(x_test,bool) == True:
+            if isinstance(x_test,bool) == False:
                 x_test = x_train
             Regression.checknan(x_train)
             Regression.checknan(x_train)
@@ -28,18 +28,26 @@ class Regression:
                     mult_linreg_mdl = mult_linreg_mdl + Betas[j]*(x_test**j)
             return mult_linreg_mdl, Betas
 
-    def get_r2(x: npt.NDArray, y: npt.NDArray) -> float:
-        yhat = np.mean(y)
-        pred,betas = Regression.get_mult_linreg(x,y,1)
-        RSS = np.sum(np.square(y-pred))
-        TSS = np.sum(np.square(y-yhat))
+    def get_r2(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
+        if isinstance(x_test,bool) == False:
+                x_test = x_train
+        if isinstance(y_test,bool) == False:
+                y_test = y_train
+        yhat = np.mean(y_test)
+        pred,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
+        RSS = np.sum(np.square(y_test-pred))
+        TSS = np.sum(np.square(y_test-yhat))
         return 1 - RSS/TSS
 
-    def get_adj_r2(x: npt.NDArray, y: npt.NDArray, n, d) -> float:
-        yhat,betas = Regression.get_mult_linreg(x,y,1)
-        ybar = np.mean(y)
-        RSS = np.sum(np.square((y - yhat)))
-        TSS = np.sum(np.square((y - ybar)))
+    def get_adj_r2(x_train: npt.NDArray, y_train: npt.NDArray, n: int, d: int, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
+        if isinstance(x_test,bool) == False:
+                x_test = x_train
+        if isinstance(y_test,bool) == False:
+                y_test = y_train
+        yhat,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
+        ybar = np.mean(y_test)
+        RSS = np.sum(np.square((y_test - yhat)))
+        TSS = np.sum(np.square((y_test - ybar)))
         return 1-((RSS/(n-d-1))/(TSS/(n-1)))
 
     def checknan(array: npt.NDArray,name: str = "your stinky data") -> bool:
