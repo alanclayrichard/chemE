@@ -3,7 +3,9 @@ This package is comprised of various math tools that I found myself using fairly
 
 Quick Installation: (using pip3)
 
-'''pip3 install git+https://github.com/alanclayrichard/math.git'''
+```
+pip3 install git+https://github.com/alanclayrichard/math.git
+```
 
 Use in python:
 
