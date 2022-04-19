@@ -138,3 +138,11 @@ class ODE:
                     flag = False
             i += 1
         return t,y
+
+class Integration:
+    def trapezoid(function,lower_limit,upper_limit,step_size=.01):
+        area = np.zeros(1)
+        for i in np.arange(lower_limit,upper_limit,step_size):
+            area = np.append(area,(step_size)*((function(i)+function(i+step_size))/2))
+        area = sum(area)
+        return area
