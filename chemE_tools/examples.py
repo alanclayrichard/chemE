@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import math_funcs
+import math
 
 rk4 = math_funcs.ODE.rk4
 def rabbits(t,x):
@@ -31,7 +32,11 @@ plt.plot(t1,y1)
 plt.show()
 
 trapezoid = math_funcs.Integration.trapezoid
-def Cc(t):
-    return 5.97435665e-03 - 2.90691266*t + 5.35489272e00*t**2 - 1.72159283e+00*t**3 + 2.26852375e-01*t**4 - 1.35633236e-02*t**5 + 3.04814898e-04*t**6
-area = trapezoid(Cc,0,14,.001)
-print(area)
+
+def f(x):
+    return np.exp(-x**2)
+
+z = 1
+area = trapezoid(f,0,z,.001)
+print((2/np.sqrt(np.pi))*area)
+print(math.erf(z))
