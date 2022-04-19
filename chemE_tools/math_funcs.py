@@ -82,7 +82,7 @@ class ODE:
         t[0] = tspan[0]
         for j in range(0,num_eqn):
             y[0,j] = ic[j]
-        for i in tqdm(range(0,n-1)):
+        for i in range(0,n-1):
             k1 = f(t[i],y[i,:])
             k2 = f(t[i]+h/2,y[i,:]+h*k1/2)
             k3 = f(t[i]+h/2,y[i,:]+h*k2/2)
