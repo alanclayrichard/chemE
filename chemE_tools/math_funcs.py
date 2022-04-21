@@ -1,4 +1,4 @@
-import tqdm as tqdm
+from tqdm import tqdm
 import numpy as np
 import numpy.typing as npt
 
