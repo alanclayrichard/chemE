@@ -3,7 +3,7 @@ import numpy as np
 import numpy.typing as npt
 
 class Regression:
-    def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
+    def get_poly_linreg(x_train: npt.NDArray, y_train: npt.NDArray, order: int, x_test: npt.NDArray = False) -> npt.NDArray:
             if isinstance(x_test,bool) == True:
                 x_test = x_train
             Regression.checknan(x_train)
@@ -21,11 +21,27 @@ class Regression:
                 x = x_ones
             Betas = np.dot(np.linalg.inv(np.dot(x.transpose(1,0),x)),np.dot(x.transpose(1,0),y))
             if order == 1:
-                mult_linreg_mdl = Betas[0] + Betas[1]*x_test
+                poly_linreg_mdl = Betas[0] + Betas[1]*x_test
             else:
-                mult_linreg_mdl = Betas[0]
+                poly_linreg_mdl = Betas[0]
                 for j in range(1,order+1):
-                    mult_linreg_mdl = mult_linreg_mdl + Betas[j]*(x_test**j)
+                    poly_linreg_mdl = poly_linreg_mdl + Betas[j]*(x_test**j)
+            return poly_linreg_mdl, Betas
+
+    def get_mult_linreg(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False) -> npt.NDArray:
+            if isinstance(x_test,bool) == True:
+                x_test = x_train
+            Regression.checknan(x_train)
+            Regression.checknan(x_train)
+            Regression.checknan(x_test)
+            y = np.reshape(y_train,[len(y_train),1])
+            x = np.reshape(x_train,[len(x_train[:,0]),len(x_train[0,:])])
+            x_ones = np.ones([len(x_train[:,0]),1])
+            x = np.hstack((x_ones,x))
+            Betas = np.dot(np.linalg.inv(np.dot(x.transpose(1,0),x)),np.dot(x.transpose(1,0),y))
+            mult_linreg_mdl = np.ones([len(x_test[:,0])])*Betas[0]
+            for j in range(0,len(x_test[0,:])):
+                mult_linreg_mdl = mult_linreg_mdl + Betas[j+1]*(x_test[:,j])
             return mult_linreg_mdl, Betas
 
     def get_r2(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
@@ -34,7 +50,7 @@ class Regression:
         if isinstance(y_test,bool) == True:
                 y_test = y_train
         yhat = np.mean(y_test)
-        pred,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
+        pred,betas = Regression.get_poly_linreg(x_train,y_train,1,x_test)
         RSS = np.sum(np.square(y_test-pred))
         TSS = np.sum(np.square(y_test-yhat))
         return 1 - RSS/TSS
@@ -44,7 +60,7 @@ class Regression:
                 x_test = x_train
         if isinstance(y_test,bool) == True:
                 y_test = y_train
-        yhat,betas = Regression.get_mult_linreg(x_train,y_train,1,x_test)
+        yhat,betas = Regression.get_poly_linreg(x_train,y_train,1,x_test)
         ybar = np.mean(y_test)
         RSS = np.sum(np.square((y_test - yhat)))
         TSS = np.sum(np.square((y_test - ybar)))
