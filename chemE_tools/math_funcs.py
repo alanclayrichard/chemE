@@ -44,7 +44,7 @@ class Regression:
                 mult_linreg_mdl = mult_linreg_mdl + Betas[j+1]*(x_test[:,j])
             return mult_linreg_mdl, Betas
 
-    def get_r2(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
+    def get_r2_regress(x_train: npt.NDArray, y_train: npt.NDArray, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
         if isinstance(x_test,bool) == True:
                 x_test = x_train
         if isinstance(y_test,bool) == True:
@@ -55,7 +55,7 @@ class Regression:
         TSS = np.sum(np.square(y_test-yhat))
         return 1 - RSS/TSS
 
-    def get_adj_r2(x_train: npt.NDArray, y_train: npt.NDArray, n: int, d: int, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
+    def get_adj_r2_regress(x_train: npt.NDArray, y_train: npt.NDArray, n: int, d: int, x_test: npt.NDArray = False, y_test: npt.NDArray = False) -> float:
         if isinstance(x_test,bool) == True:
                 x_test = x_train
         if isinstance(y_test,bool) == True:
@@ -86,6 +86,16 @@ class Regression:
                         flag = True
                         print("warning: NaN detected at [" + str(i) + "," +str(j)+"] in " + name)
         return flag
+
+class Stats:
+    def r2(y_test: npt.NDArray, pred: npt.NDArray) -> float:
+        ybar = np.mean(y_test)
+        ss_res = np.sum(np.square(y_test-pred))
+        ss_tot = np.sum(np.square(y_test-ybar))
+        return 1 - (ss_res/ss_tot)
+
+    def adj_r2(y_test: npt.NDArray, pred: npt.NDArray, n: int, p: int) -> float:
+        return 1 - ((1-Stats.r2(y_test,pred))*(n-1)/(n-p))
 
 class ODE:
     def rk4(f,t0,tf,ic,step_size):
