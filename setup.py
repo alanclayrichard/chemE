@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='chemE_tools',
-    version='0.0.7-beta.3',
+    version='0.0.7-beta.4',
     author='Clay Richard and Levi Petix',
     author_email='alanclayrichard@gmail.com',
     description='Testing installation of Package',
