@@ -88,6 +88,11 @@ class Regression:
         return flag
 
 class Stats:
+    def pearson_r(X,Y):
+        x_bar = np.mean(X)
+        y_bar = np.mean(Y)
+        return (np.sum((X-x_bar)*(Y-y_bar)))/np.sqrt((np.sum((X-x_bar)**2))*(np.sum((Y-y_bar)**2)))
+
     def r2(y_test: npt.NDArray, pred: npt.NDArray) -> float:
         ybar = np.mean(y_test)
         ss_res = np.sum(np.square(y_test-pred))
